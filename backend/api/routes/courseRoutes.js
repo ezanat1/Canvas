@@ -10,6 +10,15 @@ router.get("/", (req, res, next) => {
 
 //Add Courses
 router.post("/addCourse", (req, res, next) => {
+  const course = {
+    courseID: req.body.courseID,
+    courseName: req.body.courseName,
+    courseDept: req.body.courseDept,
+    courseDesc: req.body.courseDesc,
+    courseRoom: req.body.courseRoom,
+    waitListCap: req.body.waitListCap,
+    courseTeam: req.body.courseTeam
+  };
   res.status(200).json({
     msg: "Courses Added"
   });
@@ -23,6 +32,9 @@ router.delete("/delete/:courseID", (req, res, next) => {
 });
 //Add Content to courses
 router.patch("/addFiles/:courseID", (req, res, next) => {
-    res.status(200).json({
-      msg: "Courses Deleted"
-    });
+  res.status(200).json({
+    msg: "Courses Deleted"
+  });
+});
+
+module.exports = router;
