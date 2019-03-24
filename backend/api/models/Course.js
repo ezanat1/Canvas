@@ -9,7 +9,8 @@ const courseSchema = mongoose.Schema({
   courseDescription: { type: String, required: true },
   courseRoom: { type: String, required: true },
   waitListCap: { type: Number, required: true },
-  courseTeam: { type: String }
+  courseTeam: { type: String },
+  taughtBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 });
 
 module.exports = mongoose.model("Course", courseSchema);

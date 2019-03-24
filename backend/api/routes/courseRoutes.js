@@ -1,40 +1,66 @@
 const express = require("express");
 const router = express.Router();
+const Course = require("../models/Course");
+const mongoose = require("mongoose");
 
-//Get Courses
 router.get("/", (req, res, next) => {
-  res.status(200).json({
-    msg: "Courses Routes Work"
-  });
+  Course.find()
+    .exec()
+    .then(data => {
+      const response = {
+        count: data.length,
+        course: data.map(singleData => {
+          return {
+            courseID: singleData.courseID,
+            courseName: singleData.courseName,
+            courseDept: singleData.courseDept,
+            courseDescription: singleData.courseDescription,
+            courseRoom: singleData.courseRoom,
+            waitListCap: singleData.waitListCap,
+            courseTeam: singleData.courseTeam
+          };
+        })
+      };
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
 });
-
-//Add Courses
 router.post("/addCourse", (req, res, next) => {
-  const course = {
+  const newCourse = new Course({
+    _id: new mongoose.Types.ObjectId(),
     courseID: req.body.courseID,
     courseName: req.body.courseName,
     courseDept: req.body.courseDept,
-    courseDesc: req.body.courseDesc,
+    courseDescription: req.body.courseDescription,
     courseRoom: req.body.courseRoom,
     waitListCap: req.body.waitListCap,
     courseTeam: req.body.courseTeam
-  };
-  res.status(200).json({
-    msg: "Courses Added"
   });
-});
 
-//Delete Courses
-router.delete("/delete/:courseID", (req, res, next) => {
-  res.status(200).json({
-    msg: "Courses Deleted"
-  });
+  newCourse
+    .save()
+    .then(result => {
+      res.status(201).json({
+        msg: "Course Created Succesfully",
+        courseCreated: {
+          courseID: req.body.courseID,
+          courseName: req.body.courseName,
+          courseDept: req.body.courseDept,
+          courseDescription: req.body.courseDescription,
+          courseRoom: req.body.courseRoom,
+          waitListCap: req.body.waitListCap,
+          courseTeam: req.body.courseTeam
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      error: err;
+    });
 });
-//Add Content to courses
-router.patch("/addFiles/:courseID", (req, res, next) => {
-  res.status(200).json({
-    msg: "Courses Deleted"
-  });
-});
-
 module.exports = router;
