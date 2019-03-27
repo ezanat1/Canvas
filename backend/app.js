@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./api/routes/userRoutes");
 const courseRoutes = require("./api/routes/courseRoutes");
 const cors = require("cors");
-
+const passport = require("passport");
 const mongoose = require("mongoose");
 const MongoClient = require("mongodb").MongoClient;
 
@@ -26,6 +26,8 @@ mongoose.connect(
     "@cluster0-ujg8d.mongodb.net/test?retryWrites=true",
   { useNewUrlParser: true }
 );
+app.use(passport.initialize());
+require("./api/passports")(passport);
 app.use(morgan("dev"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
