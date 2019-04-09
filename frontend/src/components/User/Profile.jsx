@@ -48,23 +48,23 @@ class Profile extends Component {
       }
     });
   }
-  componentDidMount() {
-    const token = localStorage.usertoken;
-    const decoded = jwt_decode(token);
-    this.setState({
-      name: decoded.name,
-      email: decoded.email,
-      phoneNumber: decoded.phoneNumber,
-      about_me: decoded.about_me,
-      city: decoded.city,
-      country: decoded.country,
-      company: decoded.company,
-      school: decoded.school,
-      hometown: decoded.hometown,
-      language: decoded.language,
-      gender: decoded.gender
-    });
-  }
+  // componentDidMount() {
+  //   const token = localStorage.usertoken;
+  //   const decoded = jwt_decode(token);
+  //   this.setState({
+  //     name: decoded.name,
+  //     email: decoded.email,
+  //     phoneNumber: decoded.phoneNumber,
+  //     about_me: decoded.about_me,
+  //     city: decoded.city,
+  //     country: decoded.country,
+  //     company: decoded.company,
+  //     school: decoded.school,
+  //     hometown: decoded.hometown,
+  //     language: decoded.language,
+  //     gender: decoded.gender
+  //   });
+  // }
 
   render() {
     return (

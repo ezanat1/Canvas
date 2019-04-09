@@ -15,7 +15,7 @@ export const register = newUser => {
 
 export const update = newUser => {
   return axios
-    .post("students/update", {
+    .post("users/update", {
       name: newUser.name,
       email: newUser.email,
       password: newUser.password,
@@ -37,7 +37,7 @@ export const update = newUser => {
 
 export const login = user => {
   return axios
-    .post("students/login", {
+    .post("users/login", {
       email: user.email,
       password: user.password
     })

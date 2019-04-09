@@ -155,11 +155,9 @@ router.post("/login", (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
     .then(user => {
-      console.log("length", req.body.email);
-
       if (user.length < 1) {
         return res.status(401).json({
-          msg: "Auth Failed from length"
+          msg: "No User found with that email"
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
@@ -170,8 +168,8 @@ router.post("/login", (req, res, next) => {
         }
         if (result) {
           const payload = {
-            id: user._id,
-            name: user.first_name
+            id: user[0]._id,
+            name: user[0].first_name
           };
           jwt.sign(
             payload,

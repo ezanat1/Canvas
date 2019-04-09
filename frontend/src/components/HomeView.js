@@ -15,7 +15,6 @@ const HomeView = () => {
     <Router>
       <div>
         <div>
-          <Homepage />
           <div>
             <Route path="/profile" component={Profile} />
             <Route path="/searchcourse" component={SearchHelper} />

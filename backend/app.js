@@ -9,23 +9,19 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const MongoClient = require("mongodb").MongoClient;
 
-// const uri =
-//   "mongodb+srv://ezana:" +
-//   process.env.MONGO_ATLAS_PW +
-//   "@cluster0-ujg8d.mongodb.net/test?retryWrites=true";
-
-// MongoClient.connect(uri, (err, client) => {
-//   if (err) {
-//     console.log("Error Occured while connecting to MongoDB", err);
-//   }
-//   console.log("DB Connected");
-// });
-mongoose.connect(
+const uri =
   "mongodb+srv://ezana:" +
-    process.env.MONGO_ATLAS_PW +
-    "@cluster0-ujg8d.mongodb.net/test?retryWrites=true",
-  { useNewUrlParser: true }
-);
+  process.env.MONGO_ATLAS_PW +
+  "@cluster0-ujg8d.mongodb.net/test?retryWrites=true";
+
+mongoose.connect(uri, { useNewUrlParser: true }, (err, db) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("DB CONNECTED");
+  }
+});
+
 app.use(passport.initialize());
 require("./api/passports")(passport);
 app.use(morgan("dev"));
@@ -44,6 +40,7 @@ app.use(bodyParser.json());
 //     return res.status(200).json({});
 //   }
 // });
+
 //Middleware for User routes
 app.use("/users", userRoutes);
 //Middleware for Course routes

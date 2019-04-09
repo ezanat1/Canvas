@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Profile from "./Profile";
-import Navbar from "./Navbar";
+import Navbar from "../User/Navbar";
 import CourseItem from "../Search/CourseItem";
 import SearchCourse from "../Search/SearchCourse";
 

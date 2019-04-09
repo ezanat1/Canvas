@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { login } from "../HelperFunctions";
 import { Link, withRouter } from "react-router-dom";
+import { loginUser } from "../../actions/authentication";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 const initialState = {
   email: "",
   password: "",
@@ -47,20 +50,29 @@ class Login extends Component {
     const isValid = this.validate();
     if (isValid) {
       this.setState(initialState);
-      login(user).then(res => {
-        if (res) {
-          console.log("res");
-          this.props.history.push("/homepage");
-        }
-        if (!res) {
-          this.setState({ passwordError: "Invalid Password" });
-          return false;
-        }
-      });
+      console.log("props", this.props.loginUser(user));
+      this.props.history.push("/homepage");
+      // login(user).then(res => {
+      //   if (res) {
+      //     console.log("res");
+      //     this.props.history.push("/homepage");
+      //   }
+      //   if (!res) {
+      //     this.setState({ passwordError: "Invalid Password" });
+      //     return false;
+      //   }
+      // });
     }
   }
   componentDidMount() {
     document.title = "Login";
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
   render() {
     return (
@@ -108,7 +120,7 @@ class Login extends Component {
                     </small>
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <div>
                     <small>
                       Faculty Login <Link to="/facultyLogin">Login</Link>
@@ -119,13 +131,13 @@ class Login extends Component {
                     Don't Have an Account{" "}
                     <Link to="/register">Sign up Here</Link>
                   </small>
-                </div>
+                </div> */}
               </div>
               <div className="card-action right-align">
                 <input
                   style={{ backgroundColor: "#1e5abc", color: "white" }}
                   type="submit"
-                  className="btn  "
+                  className="btn "
                 />
               </div>
             </form>
@@ -135,4 +147,14 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+Login.propTypes = {
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);

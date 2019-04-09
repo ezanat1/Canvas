@@ -3,6 +3,9 @@ import jwt_decode from "jwt-decode";
 import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends Component {
+  constructor() {
+    super();
+  }
   logOut(event) {
     event.preventDefault();
     localStorage.removeItem("usertoken");
@@ -28,11 +31,11 @@ class Navbar extends Component {
           </Link>
         </li>
         <li>
-          <Link to="/courseHome">
+          {/* <Link to="/courseHome">
             <i style={linkStyle} className="material-icons">
               book
             </i>
-          </Link>
+          </Link> */}
         </li>
         <li>
           <Link to="/searchcourse">
