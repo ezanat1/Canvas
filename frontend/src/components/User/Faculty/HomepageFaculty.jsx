@@ -6,7 +6,7 @@ import NavbarFaculty from "./NavbarFaculty";
 import CourseItem from "../../Search/CourseItem";
 import SearchCourse from "../../Search/SearchCourse";
 
-class Homepage extends Component {
+class FacultyHomepage extends Component {
   componentDidMount() {
     document.title = "Dashboard";
   }
@@ -20,10 +20,9 @@ class Homepage extends Component {
             <hr />
           </div>
           <div className="col" />
-          {this.props.children}
         </div>
       </div>
     );
   }
 }
-export default Homepage;
+export default FacultyHomepage;

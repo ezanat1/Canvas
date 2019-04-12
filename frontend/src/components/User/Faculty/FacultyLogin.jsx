@@ -1,29 +1,15 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
-
-const facultyLogin = user => {
-  return axios
-    .post("faculty/login", {
-      email: user.email,
-      password: user.password
-    })
-    .then(res => {
-      localStorage.setItem("usertoken", res.data);
-      return res.data;
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
+import { loginFaculty } from "../../../actions/authentication";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 const initialState = {
   email: "",
   password: "",
   emailError: "",
   passwordError: ""
 };
-class Login extends Component {
+class FacultyLogin extends Component {
   constructor() {
     super();
     this.state = initialState;
@@ -63,20 +49,29 @@ class Login extends Component {
     const isValid = this.validate();
     if (isValid) {
       this.setState(initialState);
-      facultyLogin(user).then(res => {
-        if (res) {
-          console.log("res");
-          this.props.history.push("/homepageFaculty");
-        }
-        if (!res) {
-          this.setState({ passwordError: "Invalid Password" });
-          return false;
-        }
-      });
+      console.log("props", this.props.loginFaculty(user));
+      this.props.history.push("/facultyDashboard");
+      // login(user).then(res => {
+      //   if (res) {
+      //     console.log("res");
+      //     this.props.history.push("/homepage");
+      //   }
+      //   if (!res) {
+      //     this.setState({ passwordError: "Invalid Password" });
+      //     return false;
+      //   }
+      // });
     }
   }
   componentDidMount() {
     document.title = "Login";
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
   render() {
     return (
@@ -85,7 +80,7 @@ class Login extends Component {
           <div className="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
             <form noValidate onSubmit={this.onSubmit}>
               <div className="card-content">
-                <span className="card-title">Faculty Login</span>
+                <span className="card-title">Login</span>
                 <div className="row">
                   <div className="input-field col s12">
                     <label htmlFor="email">Email address</label>
@@ -115,23 +110,25 @@ class Login extends Component {
                       value={this.state.passsword}
                       onChange={this.onChange}
                     />
-                    <span
+                    <small
                       style={{ color: "red" }}
                       className="helper-text"
                       data-error="wrong"
                     >
                       {this.state.passwordError}
-                    </span>
+                    </small>
                   </div>
                 </div>
                 <div>
+                  <div>
+                    <small>
+                      Student Login <Link to="/login">Login</Link>
+                    </small>
+                  </div>
+
                   <small>
-                    Register Here{" "}
-                    <Link to="/facultyRegister">Sign up Here </Link>
-                  </small>
-                  <small>
-                    {" "}
-                    Student Login <Link to="/login"> Login </Link>
+                    Don't Have an Account{" "}
+                    <Link to="/register">Sign up Here</Link>
                   </small>
                 </div>
               </div>
@@ -140,7 +137,6 @@ class Login extends Component {
                   style={{ backgroundColor: "#1e5abc", color: "white" }}
                   type="submit"
                   className="btn "
-                  defaultValue="Login"
                 />
               </div>
             </form>
@@ -150,4 +146,14 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+FacultyLogin.propTypes = {
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { loginFaculty }
+)(FacultyLogin);

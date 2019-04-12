@@ -17,13 +17,11 @@ class NavbarFaculty extends Component {
             SJSU
           </h1>
         </li>
-        {/* <li>
-          <Link to="/profile">
-            <i style={linkStyle} className="material-icons ">
-              person
-            </i>
-          </Link>
-        </li> */}
+        <li>
+          <i style={linkStyle} className="material-icons ">
+            person
+          </i>
+        </li>
         <li>
           <Link to="/addcourse">
             <i style={linkStyle} className="material-icons">

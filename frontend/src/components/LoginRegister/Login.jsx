@@ -120,7 +120,7 @@ class Login extends Component {
                     </small>
                   </div>
                 </div>
-                {/* <div>
+                <div>
                   <div>
                     <small>
                       Faculty Login <Link to="/facultyLogin">Login</Link>
@@ -131,7 +131,7 @@ class Login extends Component {
                     Don't Have an Account{" "}
                     <Link to="/register">Sign up Here</Link>
                   </small>
-                </div> */}
+                </div>
               </div>
               <div className="card-action right-align">
                 <input

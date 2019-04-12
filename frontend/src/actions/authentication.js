@@ -27,6 +27,31 @@ export const loginUser = user => dispatch => {
       });
     });
 };
+export const registerFaculty = (user, history) => dispatch => {
+  axios
+    .post("/users/register", user)
+    .then(res => history.push("/facultysignin"))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const loginFaculty = user => dispatch => {
+  axios
+    .post("/users/login", user)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,

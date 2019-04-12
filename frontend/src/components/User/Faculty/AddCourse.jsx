@@ -20,38 +20,38 @@ class AddCourse extends Component {
   constructor() {
     super();
     this.state = initialState;
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    // this.onChange = this.onChange.bind(this);
+    // this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-  componentDidMount() {
-    const token = localStorage.usertoken;
-    const decoded = jwt_decode(token);
-    this.setState({
-      faculty_email: decoded.email
-    });
-    document.title = "Add Course";
-  }
-  onSubmit(e) {
-    e.preventDefault();
-    const course = {
-      course_ID: this.state.course_ID,
-      course_name: this.state.course_name,
-      course_dept: this.state.course_dept,
-      course_room: this.state.course_room,
-      course_description: this.state.course_description,
-      course_capacity: this.state.course_capacity,
-      faculty_email: this.state.faculty_email
-    };
-    addCourse(course).then(res => {
-      if (res) {
-        this.props.history.push("/homepageFaculty");
-      }
-    });
-  }
+  // componentDidMount() {
+  //   const token = localStorage.usertoken;
+  //   const decoded = jwt_decode(token);
+  //   this.setState({
+  //     faculty_email: decoded.email
+  //   });
+  //   document.title = "Add Course";
+  // }
+  // onSubmit(e) {
+  //   e.preventDefault();
+  //   const course = {
+  //     course_ID: this.state.course_ID,
+  //     course_name: this.state.course_name,
+  //     course_dept: this.state.course_dept,
+  //     course_room: this.state.course_room,
+  //     course_description: this.state.course_description,
+  //     course_capacity: this.state.course_capacity,
+  //     faculty_email: this.state.faculty_email
+  //   };
+  //   addCourse(course).then(res => {
+  //     if (res) {
+  //       this.props.history.push("/facultyDashboard");
+  //     }
+  //   });
+  // }
 
   render() {
     return (

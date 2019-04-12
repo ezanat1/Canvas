@@ -63,4 +63,31 @@ router.post("/addCourse", (req, res, next) => {
       error: err;
     });
 });
+router.delete("/:id", (req, res, next) => {
+  Course.find()
+    .exec()
+    .then(data => {
+      const response = {
+        count: data.length,
+        course: data.map(singleData => {
+          return {
+            courseID: singleData.courseID,
+            courseName: singleData.courseName,
+            courseDept: singleData.courseDept,
+            courseDescription: singleData.courseDescription,
+            courseRoom: singleData.courseRoom,
+            waitListCap: singleData.waitListCap,
+            courseTeam: singleData.courseTeam
+          };
+        })
+      };
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+});
 module.exports = router;

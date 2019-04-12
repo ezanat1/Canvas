@@ -1,26 +1,14 @@
 import React, { Component } from "react";
-
 import { Link, withRouter } from "react-router-dom";
-import axios from "axios";
-
-const facultyRegister = newUser => {
-  return axios
-    .post("faculty/register", {
-      name: newUser.name,
-      email: newUser.email,
-      password: newUser.password
-    })
-    .then(res => {
-      console.log("Registerd Successfully");
-      return res.data;
-    });
-};
-
-class Register extends Component {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { registerFaculty } from "../../../actions/authentication";
+class FacultyRegister extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: ""
     };
@@ -33,18 +21,22 @@ class Register extends Component {
   onSubmit(e) {
     e.preventDefault();
     const user = {
-      name: this.state.name,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
       email: this.state.email,
       password: this.state.password
     };
-    facultyRegister(user).then(res => {
-      if (res) {
-        this.props.history.push("/login");
-      }
-    });
+    this.props.registerFaculty(user, this.props.history);
   }
   componentDidMount() {
     document.title = "Register";
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
   render() {
     return (
@@ -53,15 +45,25 @@ class Register extends Component {
           <div className="col card hoverable s12 pull-s1 m6 pull-m3 l4 pull-l4">
             <form noValidate onSubmit={this.onSubmit}>
               <div className="card-content">
-                <span className="card-title">Faculty Register</span>
+                <span className="card-title">Register</span>
                 <div className="row">
                   <div className="input-field col s12">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="first_name">First Name</label>
                     <input
                       type="text"
-                      name="name"
-                      id="name"
-                      value={this.state.name}
+                      name="first_name"
+                      id="first_name"
+                      value={this.state.firstName}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                  <div className="input-field col s12">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                      type="text"
+                      name="last_name"
+                      id="last_name"
+                      value={this.state.lastName}
                       onChange={this.onChange}
                     />
                   </div>
@@ -88,7 +90,7 @@ class Register extends Component {
                   <div>
                     <small>Already have an Account </small>
                     <small>
-                      <Link to="/facultyLogin">Sign in Here</Link>
+                      <Link to="/login">Sign in Here</Link>
                     </small>
                   </div>
                 </div>
@@ -108,4 +110,14 @@ class Register extends Component {
     );
   }
 }
-export default Register;
+FacultyRegister.propTypes = {
+  registerUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { registerFaculty }
+)(withRouter(FacultyRegister));

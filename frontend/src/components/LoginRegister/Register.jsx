@@ -90,9 +90,9 @@ class Register extends Component {
                   </div>
                   <div>
                     <small>Already have an Account </small>
-                    {/* <small>
+                    <small>
                       <Link to="/login">Sign in Here</Link>
-                    </small> */}
+                    </small>
                   </div>
                 </div>
               </div>
